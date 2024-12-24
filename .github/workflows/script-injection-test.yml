@@ -1,0 +1,26 @@
+name: label issues (script injection)
+
+on:
+    issues:
+        types:
+            - opened
+
+jobs:
+    assign-label:
+        runs-on: ubuntu-latest
+        steps:
+        - uses: action/checkout@v4
+
+
+        - name: add a label
+          env:
+            AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
+          run: |
+            issue_title="${{ github.event.issue.title }}"
+            if [[ "$issue_title" == "*bug*" ]]; then
+              echo "issue is about a bug"
+              echo "Assiging label - BUG ...."
+            else
+              echo "it not a bug"
+            fi  
