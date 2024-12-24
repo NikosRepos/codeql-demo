@@ -15,10 +15,11 @@ jobs:
         - name: add a label
           env:
             AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+            issue_title: "${{ github.event.issue.title }}"
 
           run: |
-            issue_title="${{ github.event.issue.title }}"
-            if [[ "$issue_title" == "*bug*" ]]; then
+            
+            if [[ "$issue_title" == *"bug"* ]]; then
               echo "issue is about a bug"
               echo "Assiging label - BUG ...."
             else
